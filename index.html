@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f2" />
+    <title>LectureFlow — Record. Understand. Remember.</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">L</div>
+          <div>
+            <strong>lectureflow</strong>
+            <span>your thinking, captured</span>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-item active" href="#workspace"><span class="nav-icon">◈</span> Workspace</a>
+          <a class="nav-item" href="#library"><span class="nav-icon">▤</span> Lecture library</a>
+          <a class="nav-item" href="#insights"><span class="nav-icon">✦</span> Insights</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="storage-card">
+            <div class="storage-heading"><span>Local storage</span><strong>12%</strong></div>
+            <div class="storage-track"><span></span></div>
+            <p>Your recordings stay on this device.</p>
+          </div>
+          <button class="profile-button" type="button" aria-label="Open profile">
+            <span class="avatar">DK</span>
+            <span><strong>Davis Kiarii</strong><small>Personal workspace</small></span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="content" id="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">MONDAY, 17 NOVEMBER 2026</p>
+            <h1>Good morning, Davis <span class="wave">✦</span></h1>
+          </div>
+          <div class="top-actions">
+            <button class="icon-button" title="Search">⌕</button>
+            <button class="icon-button" title="Notifications">♢<span class="notification-dot"></span></button>
+            <button class="help-button">?</button>
+          </div>
+        </header>
+
+        <section class="hero-row">
+          <div>
+            <p class="eyebrow accent">YOUR NEXT DEEP DIVE</p>
+            <h2>Capture the lecture.<br /><em>Keep the insight.</em></h2>
+            <p class="hero-copy">Record for up to 3 hours, let LectureFlow shape the conversation into notes, and come back to what matters.</p>
+          </div>
+          <div class="hero-scribble" aria-hidden="true">
+            <span>from sound</span>
+            <strong>→</strong>
+            <span>to clarity</span>
+          </div>
+        </section>
+
+        <section class="record-card" aria-labelledby="record-heading">
+          <div class="record-card-top">
+            <div>
+              <span class="live-pill"><i></i> READY TO RECORD</span>
+              <h3 id="record-heading">Start a new lecture</h3>
+              <p>Use your microphone. You can pause, resume, and keep recording for up to 3 hours.</p>
+            </div>
+            <div class="record-motif" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="record-controls">
+            <label class="title-input">
+              <span>LECTURE TITLE</span>
+              <input id="lecture-title" value="Introduction to Cognitive Psychology" />
+            </label>
+            <div class="record-status">
+              <span class="timer" id="timer">00:00:00</span>
+              <span class="status-text" id="record-status">Microphone ready</span>
+            </div>
+            <button class="record-button" id="record-button" type="button"><span class="record-dot"></span><span id="record-label">Start recording</span></button>
+          </div>
+          <div class="record-footer">
+            <span>⌁ Audio is saved in small chunks so long lectures stay safe.</span>
+            <span id="support-status">Browser recording supported</span>
+          </div>
+        </section>
+
+        <section class="workspace-grid">
+          <article class="panel transcript-panel">
+            <div class="panel-heading">
+              <div><span class="section-kicker">LIVE TRANSCRIPT</span><h3>What you’re saying</h3></div>
+              <button class="small-button" id="clear-transcript" type="button">Clear</button>
+            </div>
+            <div class="transcript-body" id="transcript-body">
+              <div class="empty-state" id="transcript-empty">
+                <div class="empty-icon">◌</div>
+                <strong>Your words will appear here</strong>
+                <p>Start recording to capture a live transcript. You can also paste a transcript to try the notes flow.</p>
+                <button class="text-button" id="paste-demo" type="button">Load a sample transcript →</button>
+              </div>
+              <div class="transcript-text" id="transcript-text" hidden></div>
+            </div>
+            <div class="panel-footer">
+              <span id="word-count">0 words</span>
+              <span class="privacy-note">Private to this device</span>
+            </div>
+          </article>
+
+          <article class="panel notes-panel">
+            <div class="panel-heading">
+              <div><span class="section-kicker">YOUR NOTES</span><h3>Make it yours</h3></div>
+              <button class="small-button" id="save-notes" type="button">Saved</button>
+            </div>
+            <textarea id="notes" placeholder="Jot down a thought, question, or connection…"></textarea>
+            <div class="notes-tools">
+              <button class="tool-button" id="add-heading" type="button">+ Heading</button>
+              <button class="tool-button" id="add-bullet" type="button">• Bullet</button>
+              <button class="tool-button" id="summarize-button" type="button"><span>✦</span> Create summary</button>
+            </div>
+            <div class="summary-box" id="summary-box" hidden>
+              <div class="summary-title"><span>✦</span> AI study brief <button id="close-summary" type="button">×</button></div>
+              <p id="summary-text"></p>
+              <div id="key-points"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="recent-section" id="library">
+          <div class="section-heading-row">
+            <div><span class="section-kicker">RECENTLY CAPTURED</span><h3>Your lecture library</h3></div>
+            <button class="text-button">View all <span>→</span></button>
+          </div>
+          <div class="lecture-list" id="lecture-list"></div>
+        </section>
+
+        <footer class="app-footer">
+          <span>LectureFlow <b>·</b> built for focused learning</span>
+          <span><span class="green-dot"></span> Everything is working locally</span>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
