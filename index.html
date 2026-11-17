@@ -82,7 +82,10 @@
               <span class="timer" id="timer">00:00:00</span>
               <span class="status-text" id="record-status">Microphone ready</span>
             </div>
-            <button class="record-button" id="record-button" type="button"><span class="record-dot"></span><span id="record-label">Start recording</span></button>
+            <div class="record-actions">
+              <button class="record-button" id="record-button" type="button"><span class="record-dot"></span><span id="record-label">Start recording</span></button>
+              <button class="stop-button" id="stop-recording-button" type="button" hidden>Stop & finish</button>
+            </div>
           </div>
           <div class="record-footer">
             <span>⌁ Audio is saved in small chunks so long lectures stay safe.</span>
@@ -100,8 +103,7 @@
               <div class="empty-state" id="transcript-empty">
                 <div class="empty-icon">◌</div>
                 <strong>Your words will appear here</strong>
-                <p>Start recording to capture a live transcript. You can also paste a transcript to try the notes flow.</p>
-                <button class="text-button" id="paste-demo" type="button">Load a sample transcript →</button>
+                <p>Start recording to capture a live transcript. Your transcript will stay on this device.</p>
               </div>
               <div class="transcript-text" id="transcript-text" hidden></div>
             </div>
@@ -120,7 +122,7 @@
             <div class="notes-tools">
               <button class="tool-button" id="add-heading" type="button">+ Heading</button>
               <button class="tool-button" id="add-bullet" type="button">• Bullet</button>
-              <button class="tool-button" id="summarize-button" type="button"><span>✦</span> Create summary</button>
+              <button class="tool-button" id="summarize-button" type="button" hidden><span>✦</span> Generate summary & notes</button>
             </div>
             <div class="summary-box" id="summary-box" hidden>
               <div class="summary-title"><span>✦</span> AI study brief <button id="close-summary" type="button">×</button></div>

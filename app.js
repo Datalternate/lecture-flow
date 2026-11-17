@@ -1,9 +1,3 @@
-const sampleTranscript = `Today we are looking at the relationship between attention and memory. The first idea to keep in mind is that attention is not a passive filter; it is an active selection process. We constantly decide what deserves our limited cognitive resources.
-
-Working memory is the system that lets us temporarily hold and manipulate information. It is closely linked to attention, but it is not the same thing. A useful way to think about it is as a mental workbench: small, active, and easily interrupted.
-
-When we connect new information to something we already understand, encoding becomes stronger. This is why examples, retrieval practice, and explaining an idea in your own words are more effective than simply re-reading a page.`;
-
 const state = {
   recording: false,
   seconds: 0,
@@ -19,6 +13,7 @@ const state = {
 const $ = (id) => document.getElementById(id);
 const timer = $('timer');
 const recordButton = $('record-button');
+const stopRecordingButton = $('stop-recording-button');
 const recordLabel = $('record-label');
 const recordStatus = $('record-status');
 const transcriptText = $('transcript-text');
@@ -53,6 +48,7 @@ function setRecordingUi(recording) {
   recordLabel.textContent = recording ? 'Pause recording' : 'Start recording';
   recordStatus.textContent = recording ? 'Capturing audio + transcript' : 'Microphone ready';
   document.querySelector('.live-pill').innerHTML = recording ? '<i></i> RECORDING LIVE' : '<i></i> READY TO RECORD';
+  stopRecordingButton.hidden = !recording && state.mediaRecorder?.state !== 'paused';
 }
 
 async function startRecording() {
@@ -98,8 +94,10 @@ function stopRecording() {
   state.stream?.getTracks().forEach((track) => track.stop());
   state.recognition?.stop();
   setRecordingUi(false);
-  recordStatus.textContent = state.seconds ? 'Recording saved locally' : 'Microphone ready';
+  recordStatus.textContent = state.seconds ? 'Recording finished — ready to generate notes' : 'Microphone ready';
   recordLabel.textContent = 'Start recording';
+  $('summarize-button').hidden = !state.seconds;
+  $('summarize-button').focus();
 }
 
 function startSpeechRecognition() {
@@ -163,7 +161,7 @@ recordButton.addEventListener('click', () => {
     startRecording();
   }
 });
-$('paste-demo').addEventListener('click', () => { state.transcript = sampleTranscript; renderTranscript(); });
+stopRecordingButton.addEventListener('click', stopRecording);
 $('clear-transcript').addEventListener('click', () => { state.transcript = ''; renderTranscript(); });
 $('summarize-button').addEventListener('click', createSummary);
 $('close-summary').addEventListener('click', () => { $('summary-box').hidden = true; });
