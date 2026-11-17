@@ -93,6 +93,7 @@ button { cursor: pointer; }
 .transcript-text { color: #586760; font-size: 13px; line-height: 1.75; white-space: pre-wrap; }
 .panel-footer { border-top: 1px solid #edf0eb; padding: 13px 23px; display: flex; justify-content: space-between; color: #acb6b0; font: 9px var(--mono); }
 .privacy-note { color: #93a442; }
+.get-transcript-button { border: 0; background: transparent; color: #879d20; font: 10px var(--mono); padding: 0; }
 .notes-panel { display: flex; flex-direction: column; }
 #notes { flex: 1; resize: none; border: 0; outline: 0; padding: 5px 23px; color: #53625a; font-size: 13px; line-height: 1.8; min-height: 165px; background: transparent; }
 #notes::placeholder { color: #b2bcb5; }

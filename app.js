@@ -8,6 +8,7 @@ const state = {
   transcript: localStorage.getItem('lectureflow-transcript') || '',
   notes: localStorage.getItem('lectureflow-notes') || '',
   chunks: [],
+  finished: false,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -20,6 +21,7 @@ const transcriptText = $('transcript-text');
 const transcriptEmpty = $('transcript-empty');
 const notes = $('notes');
 const wordCount = $('word-count');
+const getTranscriptButton = $('get-transcript-button');
 
 function formatTime(totalSeconds) {
   const hours = Math.floor(totalSeconds / 3600).toString().padStart(2, '0');
@@ -36,6 +38,7 @@ function renderTranscript() {
   const count = value ? value.split(/\s+/).length : 0;
   wordCount.textContent = `${count.toLocaleString()} word${count === 1 ? '' : 's'}`;
   localStorage.setItem('lectureflow-transcript', state.transcript);
+  getTranscriptButton.hidden = !state.finished;
 }
 
 function renderNotes() {
@@ -58,6 +61,8 @@ async function startRecording() {
     return;
   }
   try {
+    state.finished = false;
+    $('summarize-button').hidden = true;
     state.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     state.mediaRecorder = new MediaRecorder(state.stream);
     state.mediaRecorder.ondataavailable = (event) => {
@@ -93,11 +98,12 @@ function stopRecording() {
   state.mediaRecorder?.stop();
   state.stream?.getTracks().forEach((track) => track.stop());
   state.recognition?.stop();
+  state.finished = true;
   setRecordingUi(false);
   recordStatus.textContent = state.seconds ? 'Recording finished — ready to generate notes' : 'Microphone ready';
   recordLabel.textContent = 'Start recording';
-  $('summarize-button').hidden = !state.seconds;
-  $('summarize-button').focus();
+  getTranscriptButton.hidden = !state.seconds;
+  if (state.seconds) getTranscriptButton.focus();
 }
 
 function startSpeechRecognition() {
@@ -163,6 +169,22 @@ recordButton.addEventListener('click', () => {
 });
 stopRecordingButton.addEventListener('click', stopRecording);
 $('clear-transcript').addEventListener('click', () => { state.transcript = ''; renderTranscript(); });
+$('get-transcript-button').addEventListener('click', () => {
+  if (state.transcript.trim()) {
+    transcriptEmpty.hidden = true;
+    transcriptText.hidden = false;
+    $('summarize-button').hidden = false;
+    recordStatus.textContent = 'Transcript ready — generate your notes';
+    $('summarize-button').focus();
+  } else {
+    transcriptEmpty.hidden = false;
+    transcriptText.hidden = true;
+    transcriptEmpty.querySelector('strong').textContent = 'No transcript was captured';
+    transcriptEmpty.querySelector('p').textContent = 'This browser recorded audio but did not provide speech recognition. Use Chrome or Edge and allow microphone access, then record again.';
+    getTranscriptButton.textContent = 'Try again';
+    $('support-status').textContent = 'Audio saved · browser speech recognition unavailable';
+  }
+});
 $('summarize-button').addEventListener('click', createSummary);
 $('close-summary').addEventListener('click', () => { $('summary-box').hidden = true; });
 $('add-heading').addEventListener('click', () => addToNotes('\n## Key idea\n'));
